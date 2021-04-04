@@ -1,0 +1,30 @@
+/**
+ * You can edit, run, and share this code. 
+ * play.kotlinlang.org 
+ */
+
+fun main() {
+    println("Hello, world!!!")
+}
+// this will be the contection between the interfaces
+fun requestData(){
+	val result = InputOutputDevices.getdata()
+    
+    when(result){
+		is Result.Loading ->userinterface.showloadingscreen()
+		is Result.error ->userinterface.showdata(result.value)
+		is Result.Loading ->userinterface.showerrormessage()
+        
+    }
+}
+sealed class Result{
+    object Loading:Result()
+    object error :Result()
+    data class success(val value :String)
+}
+// represents a data base
+object InputOutputDevices{
+    fun getData(){
+        return REsult.success("oh yeah")
+    }
+}
