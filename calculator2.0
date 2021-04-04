@@ -1,0 +1,48 @@
+// functional style programming
+fun main(args: Array<String>){
+    solveExpression(args)
+}
+
+fun getErrorMessage() ="An error has occured "
+fun solveExpression(args: Array<String>){
+	if (args.size != 3){
+        println(getErrorMessage())
+        return // to kill the programme
+    }
+    if (firstAndSecondNotValid(args[0],args[1])){
+        println(getErrorMessage())
+        return // to kill the programme
+    }
+    if (thirdnotvalid(args[2])){
+        println(getErrorMessage())
+        return // to kill the programme
+    }
+    
+    println(solve(args[0].toDouble(),args[1].toDouble(),getoperation(args[2])))
+}
+fun solve(d1 :Double, d2:Double, operation: (Double,Double)->String): String = operation.invoke(d1,d2)
+fun getoperation(s:String): (Double, Double)-> String // returns a string
+{
+    return when(s){
+         "+" -> {first: Double, Second: Double -> (first+Second).toString()}
+        "-" -> {first: Double, Second: Double -> (first-Second).toString()}
+        "/" -> {first: Double, Second: Double -> (first/Second).toString()}
+        "*" -> {first: Double, Second: Double -> (first*Second).toString()}
+        else -> {first: Double, Second: Double -> getErrorMessage()}
+    }
+}
+fun firstAndSecondNotValid(first: String, second: String):Boolean{
+    if (first.toDoubleOrNull() == null) return true
+    if (second.toDoubleOrNull() == null) return true
+    return false
+}
+
+fun thirdnotvalid(third: String):Boolean{
+    return when(third){
+        "+" -> false
+        "-" -> false
+        "/" -> false
+        "*" -> false
+        else -> true
+    }
+}
